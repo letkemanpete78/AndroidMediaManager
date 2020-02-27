@@ -1,0 +1,94 @@
+Android Media Manager
+ • TV Shows
+ • Movies
+ • Preferances
+   • Data Providers
+     • Field Mapping
+       • API Data Members
+         • Key Value Pair Listing
+           • Key
+           • Value
+           • API
+             • Name
+             • Value
+       • Actions
+         • List
+         • Delete
+         • View
+         • Edit
+         • Create
+         • Rename
+         • Change Sort
+       • Name
+       • Enabled
+       • Sort
+     • Actions
+       • List
+       • Delete
+       • Edit
+       • Create
+   • Actions
+     • Create
+     • Reset to Defaults
+     • Delete
+     • List
+     • View
+     • Save
+   • Perf Data
+     • Theme
+       • List
+       • Apply
+       • Upload
+       • Create
+       • Delete
+ • About
+   • Built Information
+     • Date
+     • Time
+     • Tag
+     • Version
+     • Website
+ • Help
+ • Local File
+   • Directory
+   • Name
+   • Size
+ • Media Parent Class
+   • Show Data
+     • Episode Data
+       • Number
+       • Season
+       • Year
+   • Movie Data
+   • Common
+     • Description
+     • Title/Name
+     • Ratings
+       • Rating
+     • Reviews
+       • Date
+       • Review
+     • Provider link
+     • Images
+     • Runtime
+     • Subtitles
+       • Subtitle Search
+         • Subtitle Download
+         • Language
+     • Languages
+     • Actors
+     • Directors
+     • Genres
+       • Is Primary
+     • Date
+     • Actions
+       • Search
+         • List Results
+           • Not Found
+           • Found
+             • Rename
+           • Create NFO file
+           • Download Art
+       • Rename
+       • Delete
+       • Sequential Rename

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+<head>
+<title>Android Media Manager</title>
+</head>
+<body>
+<outline text="TV Shows"/>
+<outline text="Movies"/>
+<outline text="Preferances">
+<outline text="Data Providers">
+<outline text="Field Mapping">
+<outline text="API Data Members">
+<outline text="Key Value Pair Listing">
+<outline text="Key"/>
+<outline text="Value"/>
+<outline text="API">
+<outline text="Name"/>
+<outline text="Value"/>
+</outline>
+</outline>
+</outline>
+<outline text="Actions">
+<outline text="List"/>
+<outline text="Delete"/>
+<outline text="View"/>
+<outline text="Edit"/>
+<outline text="Create"/>
+<outline text="Rename"/>
+<outline text="Change Sort"/>
+</outline>
+<outline text="Name"/>
+<outline text="Enabled"/>
+<outline text="Sort"/>
+</outline>
+<outline text="Actions">
+<outline text="List"/>
+<outline text="Delete"/>
+<outline text="Edit"/>
+<outline text="Create"/>
+</outline>
+</outline>
+<outline text="Actions">
+<outline text="Create"/>
+<outline text="Reset to Defaults"/>
+<outline text="Delete"/>
+<outline text="List"/>
+<outline text="View"/>
+<outline text="Save"/>
+</outline>
+<outline text="Perf Data">
+<outline text="Theme">
+<outline text="List"/>
+<outline text="Apply"/>
+<outline text="Upload"/>
+<outline text="Create"/>
+<outline text="Delete"/>
+</outline>
+</outline>
+</outline>
+<outline text="About">
+<outline text="Built Information">
+<outline text="Date"/>
+<outline text="Time"/>
+<outline text="Tag"/>
+<outline text="Version"/>
+<outline text="Website"/>
+</outline>
+</outline>
+<outline text="Help"/>
+<outline text="Local File">
+<outline text="Directory"/>
+<outline text="Name"/>
+<outline text="Size"/>
+</outline>
+<outline text="Media Parent Class">
+<outline text="Show Data">
+<outline text="Episode Data">
+<outline text="Number"/>
+<outline text="Season"/>
+<outline text="Year"/>
+</outline>
+</outline>
+<outline text="Movie Data"/>
+<outline text="Common">
+<outline text="Description"/>
+<outline text="Title/Name"/>
+<outline text="Ratings">
+<outline text="Rating"/>
+</outline>
+<outline text="Reviews">
+<outline text="Date"/>
+<outline text="Review"/>
+</outline>
+<outline text="Provider link"/>
+<outline text="Images"/>
+<outline text="Runtime"/>
+<outline text="Subtitles">
+<outline text="Subtitle Search">
+<outline text="Subtitle Download"/>
+<outline text="Language"/>
+</outline>
+</outline>
+<outline text="Languages"/>
+<outline text="Actors"/>
+<outline text="Directors"/>
+<outline text="Genres">
+<outline text="Is Primary"/>
+</outline>
+<outline text="Date"/>
+<outline text="Actions">
+<outline text="Search">
+<outline text="List Results">
+<outline text="Not Found"/>
+<outline text="Found">
+<outline text="Rename"/>
+</outline>
+<outline text="Create NFO file"/>
+<outline text="Download Art"/>
+</outline>
+</outline>
+<outline text="Rename"/>
+<outline text="Delete"/>
+<outline text="Sequential Rename"/>
+</outline>
+</outline>
+</outline>
+</body>
+</opml>
