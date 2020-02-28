@@ -1,6 +1,7 @@
 package com.example.androidmediamanager.models;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,10 +42,10 @@ final class Review {
 
     Review review1 = (Review) o;
 
-    if (date != null ? !date.equals(review1.date) : review1.date != null) {
+    if (!Objects.equals(date, review1.date)) {
       return false;
     }
-    return review != null ? review.equals(review1.review) : review1.review == null;
+    return Objects.equals(review, review1.review);
   }
 
   @Override

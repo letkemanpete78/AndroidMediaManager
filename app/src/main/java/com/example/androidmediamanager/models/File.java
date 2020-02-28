@@ -1,35 +1,36 @@
 package com.example.androidmediamanager.models;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-final class File {
+final public class File {
 
   private String filePath;
   private LocalDate modifiedDate;
   private String size;
 
-  File() {
+  public File() {
   }
 
-  File(String filePath, LocalDate modifiedDate, String size) {
+  public File(String filePath, LocalDate modifiedDate, String size) {
     this.filePath = filePath;
     this.modifiedDate = modifiedDate;
     this.size = size;
   }
 
-  private File(Builder builder) {
+  public File(Builder builder) {
     setFilePath(builder.filePath);
     setModifiedDate(builder.modifiedDate);
     setSize(builder.size);
   }
 
-  String getFilePath() {
+  public String getFilePath() {
     return filePath;
   }
 
-  void setFilePath(String filePath) {
+  public void setFilePath(String filePath) {
     this.filePath = filePath;
   }
 
@@ -37,7 +38,7 @@ final class File {
     return modifiedDate;
   }
 
-  void setModifiedDate(LocalDate modifiedDate) {
+  public void setModifiedDate(LocalDate modifiedDate) {
     this.modifiedDate = modifiedDate;
   }
 
@@ -45,7 +46,7 @@ final class File {
     return size;
   }
 
-  void setSize(String size) {
+  public void setSize(String size) {
     this.size = size;
   }
 
@@ -69,14 +70,13 @@ final class File {
 
     File file = (File) o;
 
-    if (filePath != null ? !filePath.equals(file.filePath) : file.filePath != null) {
+    if (!Objects.equals(filePath, file.filePath)) {
       return false;
     }
-    if (modifiedDate != null ? !modifiedDate.equals(file.modifiedDate)
-        : file.modifiedDate != null) {
+    if (!Objects.equals(modifiedDate, file.modifiedDate)) {
       return false;
     }
-    return size != null ? size.equals(file.size) : file.size == null;
+    return Objects.equals(size, file.size);
   }
 
   @Override
@@ -111,7 +111,7 @@ final class File {
   /**
    * {@code File} builder static inner class.
    */
-  static final class Builder {
+  public static final class Builder {
 
     private String filePath;
     private LocalDate modifiedDate;
@@ -120,7 +120,7 @@ final class File {
     Builder() {
     }
 
-    Builder(File copy) {
+    public Builder(File copy) {
       this.filePath = copy.getFilePath();
       this.modifiedDate = copy.getModifiedDate();
       this.size = copy.getSize();
@@ -133,7 +133,7 @@ final class File {
      * @param val the {@code filePath} to set
      * @return a reference to this Builder
      */
-    Builder withFilePath(String val) {
+    public Builder withFilePath(String val) {
       filePath = val;
       return this;
     }
@@ -145,7 +145,7 @@ final class File {
      * @param val the {@code modifiedDate} to set
      * @return a reference to this Builder
      */
-    Builder withModifiedDate(LocalDate val) {
+    public Builder withModifiedDate(LocalDate val) {
       modifiedDate = val;
       return this;
     }
@@ -157,7 +157,7 @@ final class File {
      * @param val the {@code size} to set
      * @return a reference to this Builder
      */
-    Builder withSize(String val) {
+    public Builder withSize(String val) {
       size = val;
       return this;
     }
@@ -167,7 +167,7 @@ final class File {
      *
      * @return a {@code File} built with parameters of this {@code File.Builder}
      */
-    File build() {
+    public File build() {
       return new File(this);
     }
   }

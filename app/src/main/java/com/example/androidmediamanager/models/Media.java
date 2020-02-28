@@ -2,6 +2,8 @@ package com.example.androidmediamanager.models;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,6 +24,7 @@ abstract class Media {
   private List<Genre> genres;
   private LocalDate releaseDate;
   private String id;
+
 
   Media() {
   }
@@ -179,50 +182,49 @@ abstract class Media {
 
     Media media = (Media) o;
 
-    if (description != null ? !description.equals(media.description) : media.description != null) {
+    if (!Objects.equals(description, media.description)) {
       return false;
     }
-    if (titleName != null ? !titleName.equals(media.titleName) : media.titleName != null) {
+    if (!Objects.equals(titleName, media.titleName)) {
       return false;
     }
-    if (ratings != null ? !ratings.equals(media.ratings) : media.ratings != null) {
+    if (!Objects.equals(ratings, media.ratings)) {
       return false;
     }
-    if (reviews != null ? !reviews.equals(media.reviews) : media.reviews != null) {
+    if (!Objects.equals(reviews, media.reviews)) {
       return false;
     }
-    if (providerLink != null ? !providerLink.equals(media.providerLink)
-        : media.providerLink != null) {
+    if (!Objects.equals(providerLink, media.providerLink)) {
       return false;
     }
-    if (source != null ? !source.equals(media.source) : media.source != null) {
+    if (!Objects.equals(source, media.source)) {
       return false;
     }
-    if (images != null ? !images.equals(media.images) : media.images != null) {
+    if (!Objects.equals(images, media.images)) {
       return false;
     }
-    if (runtime != null ? !runtime.equals(media.runtime) : media.runtime != null) {
+    if (!Objects.equals(runtime, media.runtime)) {
       return false;
     }
-    if (subtitle != null ? !subtitle.equals(media.subtitle) : media.subtitle != null) {
+    if (!Objects.equals(subtitle, media.subtitle)) {
       return false;
     }
-    if (languages != null ? !languages.equals(media.languages) : media.languages != null) {
+    if (!Objects.equals(languages, media.languages)) {
       return false;
     }
-    if (actors != null ? !actors.equals(media.actors) : media.actors != null) {
+    if (!Objects.equals(actors, media.actors)) {
       return false;
     }
-    if (directors != null ? !directors.equals(media.directors) : media.directors != null) {
+    if (!Objects.equals(directors, media.directors)) {
       return false;
     }
-    if (genres != null ? !genres.equals(media.genres) : media.genres != null) {
+    if (!Objects.equals(genres, media.genres)) {
       return false;
     }
-    if (releaseDate != null ? !releaseDate.equals(media.releaseDate) : media.releaseDate != null) {
+    if (!Objects.equals(releaseDate, media.releaseDate)) {
       return false;
     }
-    return id != null ? id.equals(media.id) : media.id == null;
+    return Objects.equals(id, media.id);
   }
 
   @Override
@@ -245,6 +247,7 @@ abstract class Media {
     return result;
   }
 
+  @NotNull
   @Override
   public String toString() {
     return "Media{" +

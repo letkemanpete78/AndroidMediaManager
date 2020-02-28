@@ -1,5 +1,6 @@
 package com.example.androidmediamanager.models;
 
+import java.util.Objects;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -57,10 +58,10 @@ final class Subtitle {
 
     Subtitle subtitle1 = (Subtitle) o;
 
-    if (subtitle != null ? !subtitle.equals(subtitle1.subtitle) : subtitle1.subtitle != null) {
+    if (!Objects.equals(subtitle, subtitle1.subtitle)) {
       return false;
     }
-    return language != null ? language.equals(subtitle1.language) : subtitle1.language == null;
+    return Objects.equals(language, subtitle1.language);
   }
 
   @Override

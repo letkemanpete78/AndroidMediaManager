@@ -6,14 +6,14 @@ import java.util.List;
 import okhttp3.OkHttpClient;
 import org.json.JSONObject;
 
-final class Movie extends Media implements Search {
+public final class Movie extends Media implements Search {
 
   private OkHttpClient client = new OkHttpClient();
 
-  Movie() {
+  public Movie() {
   }
 
-  Movie(String description, String titleName, List<Float> ratings,
+  public Movie(String description, String titleName, List<Float> ratings,
       List<Review> reviews, String providerLink, String source,
       List<Image> images, String runtime, Subtitle subtitle,
       List<String> languages, List<Person> actors,
