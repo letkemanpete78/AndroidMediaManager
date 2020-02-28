@@ -10,17 +10,16 @@ public final class Movie extends Media implements Search {
 
   private OkHttpClient client = new OkHttpClient();
 
-  public Movie() {
-  }
-
-  public Movie(String description, String titleName, List<Float> ratings,
-      List<Review> reviews, String providerLink, String source,
+  public Movie(String connectorName, String description, String titleName,
+      List<Float> ratings, List<Review> reviews, String providerLink, String source,
       List<Image> images, String runtime, Subtitle subtitle,
       List<String> languages, List<Person> actors,
-      List<Person> directors, List<Genre> genres, LocalDate releaseDate,
-      String id) {
-    super(description, titleName, ratings, reviews, providerLink, source, images, runtime, subtitle,
-        languages, actors, directors, genres, releaseDate, id);
+      List<Person> directors, List<Genre> genres, LocalDate releaseDate, String id) {
+    super(connectorName, description, titleName, ratings, reviews, providerLink, source, images,
+        runtime, subtitle, languages, actors, directors, genres, releaseDate, id);
+  }
+
+  public Movie() {
   }
 
   @Override
