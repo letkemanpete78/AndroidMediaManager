@@ -3,10 +3,8 @@ package com.example.androidmediamanager.models;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import java.util.LinkedHashMap;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,44 +23,48 @@ public class Config {
   @ColumnInfo(name = "isActive")
   private Boolean isActive;
 
-  @ColumnInfo(name = "headerNVP")
-  private LinkedHashMap<String, String> headerNVP;
-  @ColumnInfo(name = "bodyNVP")
-  private LinkedHashMap<String, String> bodyNVP;
-  @ColumnInfo(name = "urlNVP")
-  private LinkedHashMap<String, String> urlNVP;
+  @ColumnInfo(name = "headerPairs")
+  private String headerPairs;
+  @ColumnInfo(name = "bodyPairs")
+  private String bodyPairs;
+  @ColumnInfo(name = "urlPairs")
+  private String urlPairs;
+
+  private transient NVP headerNVP;
+  private transient NVP bodyNVP;
+  private transient NVP urlNVP;
 
 
-  public Config() {
-  }
-
-  public Config(Long id, String name, String url,
-      LinkedHashMap<String, String> headerNVP,
-      LinkedHashMap<String, String> bodyNVP,
-      LinkedHashMap<String, String> urlNVP, Byte sortOrder, Boolean active) {
+  public Config(Long id, String name, String url, Byte sortOrder, Boolean isActive,
+      String headerPairs, String bodyPairs, String urlPairs,
+      NVP headerNVP, NVP bodyNVP, NVP urlNVP) {
     this.id = id;
     this.name = name;
     this.url = url;
+    this.sortOrder = sortOrder;
+    this.isActive = isActive;
+    this.headerPairs = headerPairs;
+    this.bodyPairs = bodyPairs;
+    this.urlPairs = urlPairs;
     this.headerNVP = headerNVP;
     this.bodyNVP = bodyNVP;
     this.urlNVP = urlNVP;
-    this.sortOrder = sortOrder;
-    this.isActive = active;
   }
 
-
-  @NotNull
   @Override
   public String toString() {
     return "Config{" +
         "id=" + id +
         ", name='" + name + '\'' +
         ", url='" + url + '\'' +
+        ", sortOrder=" + sortOrder +
+        ", isActive=" + isActive +
+        ", headerPairs='" + headerPairs + '\'' +
+        ", bodyPairs='" + bodyPairs + '\'' +
+        ", urlPairs='" + urlPairs + '\'' +
         ", headerNVP=" + headerNVP +
         ", bodyNVP=" + bodyNVP +
         ", urlNVP=" + urlNVP +
-        ", sortOrder=" + sortOrder +
-        ", active=" + isActive +
         '}';
   }
 
@@ -82,12 +84,18 @@ public class Config {
         .append(id, config.id)
         .append(name, config.name)
         .append(url, config.url)
+        .append(sortOrder, config.sortOrder)
+        .append(isActive, config.isActive)
+        .append(headerPairs, config.headerPairs)
+        .append(bodyPairs, config.bodyPairs)
+        .append(urlPairs, config.urlPairs)
         .append(headerNVP, config.headerNVP)
         .append(bodyNVP, config.bodyNVP)
         .append(urlNVP, config.urlNVP)
-        .append(sortOrder, config.sortOrder)
-        .append(isActive, config.isActive)
         .isEquals();
+  }
+
+  public Config() {
   }
 
   @Override
@@ -96,11 +104,14 @@ public class Config {
         .append(id)
         .append(name)
         .append(url)
+        .append(sortOrder)
+        .append(isActive)
+        .append(headerPairs)
+        .append(bodyPairs)
+        .append(urlPairs)
         .append(headerNVP)
         .append(bodyNVP)
         .append(urlNVP)
-        .append(sortOrder)
-        .append(isActive)
         .toHashCode();
   }
 
@@ -128,30 +139,6 @@ public class Config {
     this.url = url;
   }
 
-  public LinkedHashMap<String, String> getHeaderNVP() {
-    return headerNVP;
-  }
-
-  public void setHeaderNVP(LinkedHashMap<String, String> headerNVP) {
-    this.headerNVP = headerNVP;
-  }
-
-  public LinkedHashMap<String, String> getBodyNVP() {
-    return bodyNVP;
-  }
-
-  public void setBodyNVP(LinkedHashMap<String, String> bodyNVP) {
-    this.bodyNVP = bodyNVP;
-  }
-
-  public LinkedHashMap<String, String> getUrlNVP() {
-    return urlNVP;
-  }
-
-  public void setUrlNVP(LinkedHashMap<String, String> urlNVP) {
-    this.urlNVP = urlNVP;
-  }
-
   public Byte getSortOrder() {
     return sortOrder;
   }
@@ -160,12 +147,63 @@ public class Config {
     this.sortOrder = sortOrder;
   }
 
-  public Boolean getIsActive() {
+  public Boolean getActive() {
     return isActive;
   }
 
-  public void setIsActive(Boolean isActive) {
-    this.isActive = isActive;
+  public void setActive(Boolean active) {
+    isActive = active;
+  }
+
+  public String getHeaderPairs() {
+    return headerPairs;
+  }
+
+  public void setHeaderPairs(String headerPairs) {
+    this.headerPairs = headerPairs;
+  }
+
+  public String getBodyPairs() {
+    return bodyPairs;
+  }
+
+  public void setBodyPairs(String bodyPairs) {
+    this.bodyPairs = bodyPairs;
+  }
+
+  public String getUrlPairs() {
+    return urlPairs;
+  }
+
+  public void setUrlPairs(String urlPairs) {
+    this.urlPairs = urlPairs;
+  }
+
+  public NVP getHeaderNVP() {
+    return headerNVP;
+  }
+
+  public void setHeaderNVP(NVP headerNVP) {
+    this.headerPairs = NVP.asJsonString(headerNVP.getDataSet(headerNVP), "header");
+    this.headerNVP = headerNVP;
+  }
+
+  public NVP getBodyNVP() {
+    return bodyNVP;
+  }
+
+  public void setBodyNVP(NVP bodyNVP) {
+    this.bodyPairs = NVP.asJsonString(headerNVP.getDataSet(bodyNVP), "body");
+    this.bodyNVP = bodyNVP;
+  }
+
+  public NVP getUrlNVP() {
+    return urlNVP;
+  }
+
+  public void setUrlNVP(NVP urlNVP) {
+    this.urlPairs = NVP.asJsonString(urlNVP.getDataSet(urlNVP), "url");
+    this.urlNVP = urlNVP;
   }
 
   // create by build json plugin
@@ -187,6 +225,31 @@ public class Config {
       e.printStackTrace();
     }
     try {
+      jo.put("sortOrder", sortOrder);
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+    try {
+      jo.put("isActive", isActive);
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+    try {
+      jo.put("headerPairs", headerPairs);
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+    try {
+      jo.put("bodyPairs", bodyPairs);
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+    try {
+      jo.put("urlPairs", urlPairs);
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+    try {
       jo.put("headerNVP", headerNVP);
     } catch (JSONException e) {
       e.printStackTrace();
@@ -198,16 +261,6 @@ public class Config {
     }
     try {
       jo.put("urlNVP", urlNVP);
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-    try {
-      jo.put("sortOrder", sortOrder);
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-    try {
-      jo.put("active", isActive);
     } catch (JSONException e) {
       e.printStackTrace();
     }

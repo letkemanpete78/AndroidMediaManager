@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Headers;
@@ -38,17 +37,6 @@ public class imdbAPI extends AsyncTask<URL, Integer, Long> implements Connector 
     doInBackground();
   }
 
-  public static String getSearchAsString(HashMap<String, String> apiParams) {
-
-    StringBuilder retval = new StringBuilder();
-    if (apiParams != null && !apiParams.isEmpty()) {
-      for (Map.Entry<String, String> entry : apiParams.entrySet()) {
-        retval.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
-      }
-      return retval.toString().substring(0, retval.length() - 1);
-    }
-    return "";
-  }
 
   @Override
   protected Long doInBackground(URL... urls) {
