@@ -1,4 +1,4 @@
-package com.example.androidmediamanager.probviders.imdb;
+package com.example.androidmediamanager.providers.imdb;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
