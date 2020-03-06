@@ -14,6 +14,7 @@ import java.util.Map;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -74,7 +75,7 @@ public class Omdb {
   @JsonProperty("Poster")
   private String poster;
   @JsonProperty("Ratings")
-  private List<Rating> ratings = new ArrayList<Rating>();
+  private List<Rating> ratings = new ArrayList<>();
   @JsonProperty("Metascore")
   private String metascore;
   @JsonProperty("imdbRating")
@@ -96,7 +97,7 @@ public class Omdb {
   @JsonProperty("Response")
   private String response;
   @JsonIgnore
-  private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+  private Map<String, Object> additionalProperties = new HashMap<>();
 
   /**
    * No args constructor for use in serialization
@@ -400,6 +401,7 @@ public class Omdb {
     this.additionalProperties.put(name, value);
   }
 
+  @NotNull
   @Override
   public String toString() {
     return new ToStringBuilder(this).append("title", title).append("year", year)

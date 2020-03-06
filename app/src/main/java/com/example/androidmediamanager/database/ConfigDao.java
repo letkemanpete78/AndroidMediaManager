@@ -1,30 +1,28 @@
 package com.example.androidmediamanager.database;
 
+import androidx.room.Delete;
+import androidx.room.Insert;
 import androidx.room.Query;
 import com.example.androidmediamanager.models.Config;
 import java.util.List;
 
 public interface ConfigDao {
 
-  //@Query("SELECT id,name,url,headerNVP,bodyNVP,urlNVP,sortOrder, isActive  from Config");
-
   @Query("SELECT id,name,url,sortOrder,isActive,headerStr,bodyStr,urlStr from Config")
   List<Config> getAll();
-  /*
 
-    @Query("SELECT * FROM user WHERE uid IN (:userIds)")
-    List<User> loadAllByIds(int[] userIds);
+  @Query("SELECT id,name,url,sortOrder,isActive,headerStr,bodyStr,urlStr from Config where id = :id")
+  Config getOneById(String id);
 
-    @Query("SELECT * FROM user WHERE first_name LIKE :first AND " +
-           "last_name LIKE :last LIMIT 1")
-    User findByName(String first, String last);
+  @Query("SELECT id,name,url,sortOrder,isActive,headerStr,bodyStr,urlStr from Config where id in (:id)")
+  List<Config> getManyById(String[] id);
 
-    @Insert
-    void insertAll(User... users);
+  @Insert
+  void insert(Config config);
 
-    @Delete
-    void delete(User user)
-   */
+  @Delete
+  void delete(Config config);
 
-
+  @Insert
+  void initalizeDB(Config[] configs);
 }
