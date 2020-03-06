@@ -1,5 +1,6 @@
 package com.example.androidmediamanager.connectors;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.example.androidmediamanager.Connector;
@@ -23,13 +24,18 @@ public class omdbAPI extends AsyncTask<URL, Integer, Long> implements Connector 
   final OkHttpClient client = new OkHttpClient();
   final String host = "http://www.omdbapi.com";
   final String apiKey = "1273ff27";
+  Context context = null;
+
   private String name;
   private String url;
 
   public omdbAPI() {
-    doInBackground();
   }
 
+  public omdbAPI(Context context) {
+    this.context = context;
+    doInBackground();
+  }
 
 
   @Override
@@ -76,5 +82,6 @@ public class omdbAPI extends AsyncTask<URL, Integer, Long> implements Connector 
   public List<Movie> parseResponse(List<String> strings) {
     return null;
   }
+
 
 }

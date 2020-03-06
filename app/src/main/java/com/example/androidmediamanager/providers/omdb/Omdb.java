@@ -87,7 +87,7 @@ public class Omdb {
   @JsonProperty("Type")
   private String type;
   @JsonProperty("DVD")
-  private String dVD;
+  private String dvd;
   @JsonProperty("BoxOffice")
   private String boxOffice;
   @JsonProperty("Production")
@@ -111,7 +111,7 @@ public class Omdb {
   public Omdb(String title, String year, String rated, String released, String runtime,
       String genre, String director, String writer, String actors, String plot, String language,
       String country, String awards, String poster, List<Rating> ratings, String metascore,
-      String imdbRating, String imdbVotes, String imdbID, String type, String dVD, String boxOffice,
+      String imdbRating, String imdbVotes, String imdbID, String type, String dvd, String boxOffice,
       String production, String website, String response) {
     super();
     this.title = title;
@@ -134,7 +134,7 @@ public class Omdb {
     this.imdbVotes = imdbVotes;
     this.imdbID = imdbID;
     this.type = type;
-    this.dVD = dVD;
+    this.dvd = dvd;
     this.boxOffice = boxOffice;
     this.production = production;
     this.website = website;
@@ -343,12 +343,12 @@ public class Omdb {
 
   @JsonProperty("DVD")
   public String getDVD() {
-    return dVD;
+    return dvd;
   }
 
   @JsonProperty("DVD")
-  public void setDVD(String dVD) {
-    this.dVD = dVD;
+  public void setDVD(String dvd) {
+    this.dvd = dvd;
   }
 
   @JsonProperty("BoxOffice")
@@ -411,7 +411,7 @@ public class Omdb {
         .append("country", country).append("awards", awards).append("poster", poster)
         .append("ratings", ratings).append("metascore", metascore).append("imdbRating", imdbRating)
         .append("imdbVotes", imdbVotes).append("imdbID", imdbID).append("type", type)
-        .append("dVD", dVD).append("boxOffice", boxOffice).append("production", production)
+        .append("dvd", dvd).append("boxOffice", boxOffice).append("production", production)
         .append("website", website).append("response", response)
         .append("additionalProperties", additionalProperties).toString();
   }
@@ -419,7 +419,7 @@ public class Omdb {
   @Override
   public int hashCode() {
     return new HashCodeBuilder().append(country).append(year).append(production).append(language)
-        .append(imdbRating).append(title).append(imdbVotes).append(type).append(dVD).append(plot)
+        .append(imdbRating).append(title).append(imdbVotes).append(type).append(dvd).append(plot)
         .append(ratings).append(genre).append(released).append(website).append(director)
         .append(imdbID).append(runtime).append(rated).append(actors).append(awards).append(response)
         .append(writer).append(metascore).append(boxOffice).append(additionalProperties)
@@ -438,7 +438,7 @@ public class Omdb {
     return new EqualsBuilder().append(country, rhs.country).append(year, rhs.year)
         .append(production, rhs.production).append(language, rhs.language)
         .append(imdbRating, rhs.imdbRating).append(title, rhs.title)
-        .append(imdbVotes, rhs.imdbVotes).append(type, rhs.type).append(dVD, rhs.dVD)
+        .append(imdbVotes, rhs.imdbVotes).append(type, rhs.type).append(dvd, rhs.dvd)
         .append(plot, rhs.plot).append(ratings, rhs.ratings).append(genre, rhs.genre)
         .append(released, rhs.released).append(website, rhs.website).append(director, rhs.director)
         .append(imdbID, rhs.imdbID).append(runtime, rhs.runtime).append(rated, rhs.rated)

@@ -1,5 +1,10 @@
 package com.example.androidmediamanager.models;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -9,7 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 @Entity
-public class Config {
+public class ConfigMaster {
 
   @PrimaryKey
   private Long id;
@@ -30,14 +35,11 @@ public class Config {
   @ColumnInfo(name = "urlPairs")
   private String urlPairs;
 
-  private transient NVP headerNVP;
-  private transient NVP bodyNVP;
-  private transient NVP urlNVP;
 
+  private Context context;
 
-  public Config(Long id, String name, String url, Byte sortOrder, Boolean isActive,
-      String headerPairs, String bodyPairs, String urlPairs,
-      NVP headerNVP, NVP bodyNVP, NVP urlNVP) {
+  public ConfigMaster(Long id, String name, String url, Byte sortOrder, Boolean isActive,
+      String headerPairs, String bodyPairs, String urlPairs) {
     this.id = id;
     this.name = name;
     this.url = url;
@@ -46,9 +48,10 @@ public class Config {
     this.headerPairs = headerPairs;
     this.bodyPairs = bodyPairs;
     this.urlPairs = urlPairs;
-    this.headerNVP = headerNVP;
-    this.bodyNVP = bodyNVP;
-    this.urlNVP = urlNVP;
+
+  }
+
+  public ConfigMaster() {
   }
 
   @Override
@@ -59,12 +62,7 @@ public class Config {
         ", url='" + url + '\'' +
         ", sortOrder=" + sortOrder +
         ", isActive=" + isActive +
-        ", headerPairs='" + headerPairs + '\'' +
-        ", bodyPairs='" + bodyPairs + '\'' +
-        ", urlPairs='" + urlPairs + '\'' +
-        ", headerNVP=" + headerNVP +
-        ", bodyNVP=" + bodyNVP +
-        ", urlNVP=" + urlNVP +
+
         '}';
   }
 
@@ -78,41 +76,19 @@ public class Config {
       return false;
     }
 
-    Config config = (Config) o;
+    ConfigMaster configMaster = (ConfigMaster) o;
 
     return new EqualsBuilder()
-        .append(id, config.id)
-        .append(name, config.name)
-        .append(url, config.url)
-        .append(sortOrder, config.sortOrder)
-        .append(isActive, config.isActive)
-        .append(headerPairs, config.headerPairs)
-        .append(bodyPairs, config.bodyPairs)
-        .append(urlPairs, config.urlPairs)
-        .append(headerNVP, config.headerNVP)
-        .append(bodyNVP, config.bodyNVP)
-        .append(urlNVP, config.urlNVP)
+        .append(id, configMaster.id)
+        .append(name, configMaster.name)
+        .append(url, configMaster.url)
+        .append(sortOrder, configMaster.sortOrder)
+        .append(isActive, configMaster.isActive)
+        .append(headerPairs, configMaster.headerPairs)
+        .append(bodyPairs, configMaster.bodyPairs)
+        .append(urlPairs, configMaster.urlPairs)
+
         .isEquals();
-  }
-
-  public Config() {
-  }
-
-  @Override
-  public int hashCode() {
-    return new HashCodeBuilder(17, 37)
-        .append(id)
-        .append(name)
-        .append(url)
-        .append(sortOrder)
-        .append(isActive)
-        .append(headerPairs)
-        .append(bodyPairs)
-        .append(urlPairs)
-        .append(headerNVP)
-        .append(bodyNVP)
-        .append(urlNVP)
-        .toHashCode();
   }
 
   public Long getId() {
@@ -179,31 +155,19 @@ public class Config {
     this.urlPairs = urlPairs;
   }
 
-  public NVP getHeaderNVP() {
-    return headerNVP;
-  }
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37)
+        .append(id)
+        .append(name)
+        .append(url)
+        .append(sortOrder)
+        .append(isActive)
+        .append(headerPairs)
+        .append(bodyPairs)
+        .append(urlPairs)
 
-  public void setHeaderNVP(NVP headerNVP) {
-    this.headerPairs = NVP.asJsonString(headerNVP.getDataSet(headerNVP), "header");
-    this.headerNVP = headerNVP;
-  }
-
-  public NVP getBodyNVP() {
-    return bodyNVP;
-  }
-
-  public void setBodyNVP(NVP bodyNVP) {
-    this.bodyPairs = NVP.asJsonString(headerNVP.getDataSet(bodyNVP), "body");
-    this.bodyNVP = bodyNVP;
-  }
-
-  public NVP getUrlNVP() {
-    return urlNVP;
-  }
-
-  public void setUrlNVP(NVP urlNVP) {
-    this.urlPairs = NVP.asJsonString(urlNVP.getDataSet(urlNVP), "url");
-    this.urlNVP = urlNVP;
+        .toHashCode();
   }
 
   // create by build json plugin
@@ -249,21 +213,51 @@ public class Config {
     } catch (JSONException e) {
       e.printStackTrace();
     }
-    try {
-      jo.put("headerNVP", headerNVP);
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-    try {
-      jo.put("bodyNVP", bodyNVP);
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-    try {
-      jo.put("urlNVP", urlNVP);
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
+
     return jo;
+  }
+
+  public void testInsert(Context context) {
+    ConfigDB db = new ConfigDB(context);
+    SQLiteDatabase database = db.getWritableDatabase();
+    db.insert(database);
+  }
+
+  public class ConfigDB extends SQLiteOpenHelper {
+
+    public static final String DB_NAME = "config.db";
+    public static final String TABLE_NAME = "config";
+    public static final int VERSION = 2;
+    private ContentValues contentValues;
+
+    public ConfigDB(@Nullable Context context) {
+      super(context, DB_NAME, null, VERSION);
+      contentValues = new ContentValues();
+
+      contentValues.put("host", "http://www.omdbapi.com");
+      contentValues.put("apiKey", "1273ff27");
+      contentValues.put("operation", "s");
+      contentValues.put("searchValue", "Avengers");
+      contentValues.put("url", "http://www.omdbapi.com?apikey=1273ff27&s=Avengers");
+
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+      db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME
+          + " (id INTEGER primary key,  searchValue text ,   host text ,  operation text,  apiKey text,  url text)");
+      db.insert(TABLE_NAME, null, contentValues);
+    }
+
+    public int insert(SQLiteDatabase db) {
+
+      return (int) db.insert(TABLE_NAME, null, contentValues);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+      db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+      onCreate(db);
+    }
   }
 }
