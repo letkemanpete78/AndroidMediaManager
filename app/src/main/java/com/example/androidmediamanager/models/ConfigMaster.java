@@ -5,53 +5,34 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.droidparts.util.Strings;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-@Entity
 public class ConfigMaster {
 
-  @PrimaryKey
   private Long id;
-  @ColumnInfo(name = "name")
   private String name;
-  @ColumnInfo(name = "url")
   private String url;
-
-  @ColumnInfo(name = "sortOrder")
   private Byte sortOrder;
-  @ColumnInfo(name = "isActive")
   private Boolean isActive;
-
-  @ColumnInfo(name = "headerPairs")
-  private String headerPairs;
-  @ColumnInfo(name = "bodyPairs")
-  private String bodyPairs;
-  @ColumnInfo(name = "urlPairs")
-  private String urlPairs;
-
-
   private Context context;
 
-  public ConfigMaster(Long id, String name, String url, Byte sortOrder, Boolean isActive,
-      String headerPairs, String bodyPairs, String urlPairs) {
+  public ConfigMaster(Long id, String name, String url, Byte sortOrder, Boolean isActive
+  ) {
     this.id = id;
     this.name = name;
     this.url = url;
     this.sortOrder = sortOrder;
     this.isActive = isActive;
-    this.headerPairs = headerPairs;
-    this.bodyPairs = bodyPairs;
-    this.urlPairs = urlPairs;
-
   }
 
   public ConfigMaster() {
+  }
+
+  public ConfigMaster(Context context) {
   }
 
   @Override
@@ -76,7 +57,7 @@ public class ConfigMaster {
       return false;
     }
 
-    ConfigMaster configMaster = (ConfigMaster) o;
+    com.example.androidmediamanager.models.ConfigMaster configMaster = (com.example.androidmediamanager.models.ConfigMaster) o;
 
     return new EqualsBuilder()
         .append(id, configMaster.id)
@@ -84,10 +65,6 @@ public class ConfigMaster {
         .append(url, configMaster.url)
         .append(sortOrder, configMaster.sortOrder)
         .append(isActive, configMaster.isActive)
-        .append(headerPairs, configMaster.headerPairs)
-        .append(bodyPairs, configMaster.bodyPairs)
-        .append(urlPairs, configMaster.urlPairs)
-
         .isEquals();
   }
 
@@ -131,30 +108,6 @@ public class ConfigMaster {
     isActive = active;
   }
 
-  public String getHeaderPairs() {
-    return headerPairs;
-  }
-
-  public void setHeaderPairs(String headerPairs) {
-    this.headerPairs = headerPairs;
-  }
-
-  public String getBodyPairs() {
-    return bodyPairs;
-  }
-
-  public void setBodyPairs(String bodyPairs) {
-    this.bodyPairs = bodyPairs;
-  }
-
-  public String getUrlPairs() {
-    return urlPairs;
-  }
-
-  public void setUrlPairs(String urlPairs) {
-    this.urlPairs = urlPairs;
-  }
-
   @Override
   public int hashCode() {
     return new HashCodeBuilder(17, 37)
@@ -163,10 +116,6 @@ public class ConfigMaster {
         .append(url)
         .append(sortOrder)
         .append(isActive)
-        .append(headerPairs)
-        .append(bodyPairs)
-        .append(urlPairs)
-
         .toHashCode();
   }
 
@@ -198,65 +147,64 @@ public class ConfigMaster {
     } catch (JSONException e) {
       e.printStackTrace();
     }
-    try {
-      jo.put("headerPairs", headerPairs);
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-    try {
-      jo.put("bodyPairs", bodyPairs);
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-    try {
-      jo.put("urlPairs", urlPairs);
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
 
     return jo;
   }
 
-  public void testInsert(Context context) {
-    ConfigDB db = new ConfigDB(context);
-    SQLiteDatabase database = db.getWritableDatabase();
-    db.insert(database);
-  }
+//  public void testInsert(Context context) {
+//    ConfigMaster db = new ConfigMaster(context);
+//    SQLiteDatabase database = db.context.openOrCreateDatabase(ConfigMasterDB.DB_NAME,Context.MODE_ENABLE_WRITE_AHEAD_LOGGING,
+//        new CursorFactory().newCursor(db.context.))
+//    db.insert(database);
+//  }
 
-  public class ConfigDB extends SQLiteOpenHelper {
+  public static class ConfigMasterDB extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "config.db";
-    public static final String TABLE_NAME = "config";
-    public static final int VERSION = 2;
-    private ContentValues contentValues;
+    public static final String CONFIG_MASTER_TABLE = "configMaster";
+    public static final String CONFIG_DETAILS_TABLE = "configDetails";
+    public static final int VERSION = 4;
+    private ContentValues masterValues;
+    private ContentValues detailValues;
 
-    public ConfigDB(@Nullable Context context) {
+    public ConfigMasterDB(@Nullable Context context) {
       super(context, DB_NAME, null, VERSION);
-      contentValues = new ContentValues();
+      masterValues = new ContentValues();
 
-      contentValues.put("host", "http://www.omdbapi.com");
-      contentValues.put("apiKey", "1273ff27");
-      contentValues.put("operation", "s");
-      contentValues.put("searchValue", "Avengers");
-      contentValues.put("url", "http://www.omdbapi.com?apikey=1273ff27&s=Avengers");
+      detailValues.put("host", "http://www.omdbapi.com/");
+      detailValues.put("apiKey", "1273ff27");
+      detailValues.put("operation", "s");
+
+      masterValues.put("operation", "s");
+      masterValues.put("searchValue", "Avengers");
+      masterValues.put("isActive", true);
+
+      masterValues.put("url", String.format("%s?apikey=%s&%s=%s", masterValues.get("host"),
+          masterValues.getAsString("apikey"), masterValues.getAsString("operation"),
+          Strings.urlEncode(masterValues.getAsString("searchValue"))));
 
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-      db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME
-          + " (id INTEGER primary key,  searchValue text ,   host text ,  operation text,  apiKey text,  url text)");
-      db.insert(TABLE_NAME, null, contentValues);
+      db.execSQL("CREATE TABLE IF NOT EXISTS " + CONFIG_MASTER_TABLE
+          + " (masterId INTEGER primary key,  apiKey text,  url text)");
+      long masterId = db.insert(CONFIG_MASTER_TABLE, null, masterValues);
+      detailValues.put("masterId", masterId);
+      db.execSQL("CREATE TABLE IF NOT EXISTS " + CONFIG_DETAILS_TABLE + " "
+          + "(detailsId INTEGER primary key,masterId,name,value,configArea)");
     }
 
-    public int insert(SQLiteDatabase db) {
 
-      return (int) db.insert(TABLE_NAME, null, contentValues);
+    public long insert(SQLiteDatabase db) {
+      long masterId = (long) db.insert(CONFIG_MASTER_TABLE, null, masterValues);
+      detailValues.put("masterId", masterId);
+      return masterId;
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-      db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+      db.execSQL("DROP TABLE IF EXISTS " + CONFIG_MASTER_TABLE);
       onCreate(db);
     }
   }
