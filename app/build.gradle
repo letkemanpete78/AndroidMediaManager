@@ -51,12 +51,13 @@ dependencies {
 // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.3'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
 // https://mvnrepository.com/artifact/androidx.room/room-common
     implementation group: 'androidx.room', name: 'room-common', version: '2.2.4'
 
     // https://mvnrepository.com/artifact/org.droidparts/droidparts
-    compile group: 'org.droidparts', name: 'droidparts', version: '3.2.5'
+    implementation group: 'org.droidparts', name: 'droidparts', version: '3.2.5'
 
     testImplementation 'commons-io:commons-io:20030203.000550'
     testImplementation 'junit:junit:4.13'
